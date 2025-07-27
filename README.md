@@ -16,7 +16,8 @@ The CSSR4Africa (Culturally sensitive social robots for Africa) project aims to 
   - [For the Gazebo Simulator](#for-the-gazebo-simulator)
 - [Installing and Running the CSSR4Africa Software](#installing-and-running-the-cssr4africa-software)
   - [Installing for the Physical Robot](#installation-for-the-physical-robot)
-  - [Setting up the Face and Person Detection Environment](#setting-up-the-face-and-person-detection-environment )
+  - [Setting up the Face and Person Detection Environment](#setting-up-the-face-and-person-detection-environment)
+  - [Setting up the Sound Detection and Localization Environment](#setting-up-the-sound-detection-environment)
   - [Installing for the Simulator Robot](#installation-for-the-simulator-robot)
 - [References](#references)
 
@@ -368,7 +369,7 @@ source $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs/cssr4africa_fa
 ``` 
 
 
-### Setting up the Sound Detection Enviornment
+### Setting up the Sound Detection Environment
 
 This section provides step-by-step instructions to create and configure a dedicated Python virtual environment for the sound detection component of the CSSR4Africa robotics system. You can copy and paste these commands directly into your terminal.
 
