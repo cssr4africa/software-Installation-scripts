@@ -61,7 +61,7 @@ cd $HOME/workspace/pepper_sim_ws/src && \
 git clone -b correct_chain_model_and_gazebo_enabled https://github.com/awesomebytes/pepper_robot && \
 git clone -b simulation_that_works https://github.com/awesomebytes/pepper_virtual && \
 git clone https://github.com/cssr4africa/gazebo_model_velocity_plugin && \
-sudo apt-get install -y ros-noetic-tf2-sensor-msgs ros-noetic-ros-control ros-noetic-ros-controllers ros-noetic-gazebo-ros ros-noetic-gazebo-ros-control ros-noetic-gazebo-plugins ros-noetic-controller-manager ros-noetic-ddynamic-reconfigure-python ros-noetic-pepper-meshes && \
+sudo apt-get install -y ros-noetic-tf2-sensor-msgs ros-noetic-ros-control ros-noetic-ros-controllers ros-noetic-gazebo-ros ros-noetic-gazebo-ros-control ros-noetic-gazebo-plugins ros-noetic-controller-manager ros-noetic-ddynamic-reconfigure-python ros-noetic-image-transport ros-noetic-actionlib-msgs ros-noetic-tf2-ros ros-noetic-message-runtime ros-noetic-message-generation ros-noetic-angles ros-noetic-cv-bridge ros-noetic-std-srvs ros-noetic-control-msgs ros-noetic-sensor-msgs ros-noetic-trajectory-msgs ros-noetic-geometry-msgs ros-noetic-nav-msgs ros-noetic-pepper-meshes && \
 cd $HOME/workspace/pepper_sim_ws && catkin_make
 
 # Change the default Pip version to Python3
