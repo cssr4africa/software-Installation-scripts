@@ -51,10 +51,27 @@ install_physical_robot() {
     mv ~/cssr4africa_unit_tests_data_files/person_detection_test/data/* \
        "$HOME/workspace/pepper_rob_ws/src/cssr4africa/unit_tests/person_detection_test/data/" 2>/dev/null
 
-    # 8. Delete the cloned models and test data directories
-    echo "8. Cleaning up cloned directories..."
+    # 8. Move speech event models to the correct directory
+    echo "8. Moving speech event models to the correct directory..."
+    mkdir -p "$HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/speech_event/models"
+    mv ~/cssr4africa_models/speech_event/models/* \
+        "$HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/speech_event/models"
+
+    # 9. Delete the cloned models and test data directories
+    echo "9. Cleaning up cloned directories..."
     rm -rf ~/cssr4africa_models
     rm -rf ~/cssr4africa_unit_tests_data_files
+
+    # 10. Install additional linux packages for speech event
+    echo "10. Installing additional linux packages for speech event.."
+    sudo apt-get update
+    sudo apt-get install cython3 ffmpeg gfortran libopenblas-dev libopenblas64-dev patchelf pkg-config portaudio19-dev \
+        python3-testresources python3-tk python3-typing-extensions sox
+
+    # 11. Make speech event application files executable
+    chmod +x "$HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/speech_event/src/speech_event_application.py"
+    chmod +x "$HOME/workspace/pepper_rob_ws/src/cssr4africa/unit_tests/speech_event_test/src/speech_event_test_application.py"
+    chmod +x "$HOME/workspace/pepper_rob_ws/src/cssr4africa/unit_tests/speech_event_test/src/speech_event_driver.py"
 
     echo "Physical robot installation completed!"
 }
@@ -149,6 +166,49 @@ install_sound_detection_environment() {
     echo "Sound Detection Environment setup completed!"
 }
 
+# Function to install speech event environment
+install_speech_event_environment() {
+    ALL_VENVS_DIR="$HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs"
+    SPEECH_EVENT_VENV_DIR="$HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs/cssr4africa_speech_event_env"
+    REQUIREMENTS_FILE="$HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/speech_event/speech_event_requirements.txt"
+
+    echo "Setting up speech event's virtual environment..."
+
+    # Verify python3.8 installation
+    echo "1. Verifying that the default python3.8 exists..."
+    python3.8 --version
+
+    # Verify no speech event virtual environment exists
+    echo "2. Verifying no speech event virtual environment exists..."
+    if [ -d "$SPEECH_EVENT_VENV_DIR" ]; then
+        echo "Deleting existing speech event python virtual environment..."
+        rm -rf "$SPEECH_EVENT_VENV_DIR"
+    fi
+
+    # Create virtual environment
+    echo "3. Creating speech event's virtual environment..."
+    mkdir -p "$ALL_VENVS_DIR"
+    python3.8 -m "$SPEECH_EVENT_VENV_DIR"
+
+    # Activate the virtual environment
+    echo "4. Activating virtual environment..."
+    source "$SPEECH_EVENT_VENV_DIR/bin/activate"
+
+    # Upgrade pip in the virtual environment
+    echo "5. Upgrading virtual environment's pip..."
+    python -m pip install --upgrade pip
+
+    # Install python requirements
+    echo "6. Installing python requirements..."
+    pip install -r "$REQUIREMENTS_FILE"
+
+    # Deactivate the virtual environment
+    echo "7. Deactivating virtual environment..."
+    deactivate
+
+    echo "Speech event virtual environment setup completed!"
+}
+
 # Main installation process
 echo "What would you like to install?"
 echo "1) Physical Robot"
@@ -161,6 +221,7 @@ case $choice in
         install_physical_robot
         install_face_person_detection_environment
         install_sound_detection_environment
+        install_speech_event_environment
         ;;
     2)
         install_simulator_robot
@@ -170,6 +231,7 @@ case $choice in
         install_simulator_robot
         install_face_person_detection_environment
         install_sound_detection_environment
+        install_speech_event_environment
         ;;
     *)
         echo "Invalid choice. Exiting..."
