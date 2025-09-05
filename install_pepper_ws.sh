@@ -16,6 +16,7 @@ git clone https://github.com/cssr4Africa/pepper_dcm_robot.git && \
 git clone https://github.com/ros-naoqi/pepper_virtual.git && \
 git clone https://github.com/ros-naoqi/pepper_robot.git && \
 git clone https://github.com/ros-naoqi/pepper_moveit_config.git
+git clone --depth 1 --branch 4.6.2 https://github.com/BehaviorTree/BehaviorTree.CPP.git
 
 # Make scripts executable
 echo "Making naoqi_driver scripts executable..." && \
@@ -34,7 +35,13 @@ echo "source $HOME/workspace/pepper_rob_ws/devel/setup.bash" >> $HOME/.bashrc
 echo "Installing additional packages..." && \
 sudo apt-get install -y ros-noetic-joint-trajectory-controller && \
 sudo apt-get install -y ros-noetic-ros-controllers && \
-sudo apt-get install -y ros-noetic-pepper-meshes
+sudo apt-get install -y ros-noetic-pepper-meshes && \
+sudo apt-get install -y ros-noetic-tf2-sensor-msgs ros-noetic-ros-control ros-noetic-ros-controllers ros-noetic-gazebo-ros ros-noetic-gazebo-ros-control ros-noetic-gazebo-plugins ros-noetic-controller-manager ros-noetic-ddynamic-reconfigure-python ros-noetic-image-transport ros-noetic-actionlib-msgs ros-noetic-tf2-ros ros-noetic-message-runtime ros-noetic-message-generation ros-noetic-angles ros-noetic-cv-bridge ros-noetic-std-srvs ros-noetic-control-msgs ros-noetic-sensor-msgs ros-noetic-trajectory-msgs ros-noetic-geometry-msgs ros-noetic-nav-msgs ros-noetic-pepper-meshes && \
+sudo apt-get install espeak libzmq3-dev sqlite3 libsqlite3-dev libgtest-dev
+cd $HOME/workspace/pepper_rob_ws/src/BehaviorTree.CPP
+cmake -DCMAKE_CXX_STANDARD=17 .
+make
+sudo make install
 
 # Install Python 2.7, Pip2, and necessary packages
 echo "Installing Python 2.7, Pip2, and necessary packages..." && \
@@ -61,7 +68,6 @@ cd $HOME/workspace/pepper_sim_ws/src && \
 git clone -b correct_chain_model_and_gazebo_enabled https://github.com/awesomebytes/pepper_robot && \
 git clone -b simulation_that_works https://github.com/awesomebytes/pepper_virtual && \
 git clone https://github.com/cssr4africa/gazebo_model_velocity_plugin && \
-sudo apt-get install -y ros-noetic-tf2-sensor-msgs ros-noetic-ros-control ros-noetic-ros-controllers ros-noetic-gazebo-ros ros-noetic-gazebo-ros-control ros-noetic-gazebo-plugins ros-noetic-controller-manager ros-noetic-ddynamic-reconfigure-python ros-noetic-image-transport ros-noetic-actionlib-msgs ros-noetic-tf2-ros ros-noetic-message-runtime ros-noetic-message-generation ros-noetic-angles ros-noetic-cv-bridge ros-noetic-std-srvs ros-noetic-control-msgs ros-noetic-sensor-msgs ros-noetic-trajectory-msgs ros-noetic-geometry-msgs ros-noetic-nav-msgs ros-noetic-pepper-meshes && \
 cd $HOME/workspace/pepper_sim_ws && catkin_make
 
 # Change the default Pip version to Python3
