@@ -9,17 +9,24 @@
 The CSSR4Africa (Culturally sensitive social robots for Africa) project aims to equip social robots with culturally-sensitive behaviours to engage effectively with people in African contexts. By identifying verbal and non-verbal social and cultural norms prevalent in African countries, the project integrates these behavioural patterns into robots, ensuring interactions align with local expectations. Demonstrations include giving a tour of a university laboratory and assisting visitors with directions at a university reception, showcasing the robots' culturally-aware engagement.
 
 # Table of Contents
+- [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Setting up the Development Environment](#setting-up-the-development-environment)
-  - [For the Physical Robot](#for-the-physical-robot)
-  - [For the Gazebo Simulator](#for-the-gazebo-simulator)
-- [Installing and Running the CSSR4Africa Software](#installing-and-running-the-cssr4africa-software)
-  - [Installing for the Physical Robot](#installation-for-the-physical-robot)
-  - [Setting up the Face and Person Detection Environment](#setting-up-the-face-and-person-detection-environment)
-  - [Setting up the Sound Detection and Localization Environment](#setting-up-the-sound-detection-environment)
-  - [Installing for the Simulator Robot](#installation-for-the-simulator-robot)
-- [References](#references)
+  - [`Using shell scripts`](#using-shell-scripts)
+  - [✅ INSTALLATION COMPLETE ✅](#-installation-complete-)
+  - [`Step-by-step Installation`](#step-by-step-installation)
+    - [Installing Dependencies](#installing-dependencies)
+    - [Installing ROS Noetic](#installing-ros-noetic)
+    - [For the Physical Robot](#for-the-physical-robot)
+    - [For the Gazebo Simulator](#for-the-gazebo-simulator)
+  - [Installing and Running the CSSR4Africa Software](#installing-and-running-the-cssr4africa-software)
+    - [Installation for the Physical Robot](#installation-for-the-physical-robot)
+    - [Setting up the Face and Person Detection Environment](#setting-up-the-face-and-person-detection-environment)
+    - [Setting up the Sound Detection Environment](#setting-up-the-sound-detection-environment)
+    - [Installation for the Simulator Robot](#installation-for-the-simulator-robot)
+  - [✅ INSTALLATION COMPLETE ✅](#-installation-complete--1)
+  - [References](#references)
 
 # Introduction
 
@@ -151,7 +158,9 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
 1. **Install the NAOqi Driver and ROS Packages**
 
     ```bash
-    sudo apt-get install -y ros-noetic-naoqi-driver ros-noetic-joint-trajectory-controller ros-noetic-ros-controllers ros-noetic-pepper-meshes
+    sudo apt-get install -y ros-noetic-naoqi-driver ros-noetic-joint-trajectory-controller ros-noetic-ros-controllers ros-noetic-pepper-meshes && \
+    
+    sudo apt-get install -y ros-noetic-tf2-sensor-msgs ros-noetic-ros-control ros-noetic-ros-controllers ros-noetic-gazebo-ros ros-noetic-gazebo-ros-control ros-noetic-gazebo-plugins ros-noetic-controller-manager ros-noetic-ddynamic-reconfigure-python ros-noetic-pepper-meshes && \
     ```
 
 2. **Create and Initialize the ROS Workspace**
@@ -169,7 +178,8 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
     git clone https://github.com/cssr4africa/pepper_dcm_robot.git && \
     git clone https://github.com/ros-naoqi/pepper_virtual.git && \
     git clone https://github.com/ros-naoqi/pepper_robot.git && \
-    git clone https://github.com/ros-naoqi/pepper_moveit_config.git
+    git clone https://github.com/ros-naoqi/pepper_moveit_config.git && \
+    git clone --depth 1 --branch 4.6.2 https://github.com/BehaviorTree/BehaviorTree.CPP.git
     ```
 
 4. **Make scripts executable**
@@ -177,21 +187,27 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
     ```bash
     chmod +x $HOME/workspace/pepper_rob_ws/src/naoqi_driver/scripts/*
     ```
-
-5. **Build the Workspace**
+5. **Build and install the BehaviorTree.CPP library**
+   ```bash
+    cd $HOME/workspace/pepper_rob_ws/src/BehaviorTree.CPP
+    cmake -DCMAKE_CXX_STANDARD=17 .
+    make
+    sudo make install
+   ```
+1. **Build the Workspace**
 
     ```bash
     cd $HOME/workspace/pepper_rob_ws && catkin_make
 
     ```
 
-6. **Update the ROS Environment**
+2. **Update the ROS Environment**
 
     ```bash
     echo "source $HOME/workspace/pepper_rob_ws/devel/setup.bash" >> $HOME/.bashrc && source devel/setup.bash 
     ```
 
-7. **Install and Configure the Python NAOqi SDK**
+3. **Install and Configure the Python NAOqi SDK**
 
     ```bash
     cd $HOME && \
@@ -205,7 +221,7 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
     source $HOME/.bashrc
     ```
 
-8. **Bring Up Pepper**
+4.  **Bring Up Pepper**
 
     For bringing up the robot, you need to know the robot IP, the roscore IP, and the network interface name. The robot IP is the IP address of the robot, the roscore IP is the IP address of the computer running the roscore, and the network interface name is the name of the network interface. The network interface name can be found by running the `ifconfig` command below.
 
@@ -234,8 +250,7 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
     cd $HOME/workspace/pepper_sim_ws/src && \
     git clone -b correct_chain_model_and_gazebo_enabled https://github.com/awesomebytes/pepper_robot && \
     git clone -b simulation_that_works https://github.com/awesomebytes/pepper_virtual && \
-    git clone https://github.com/cssr4africa/gazebo_model_velocity_plugin && \
-    sudo apt-get install -y ros-noetic-tf2-sensor-msgs ros-noetic-ros-control ros-noetic-ros-controllers ros-noetic-gazebo-ros ros-noetic-gazebo-ros-control ros-noetic-gazebo-plugins ros-noetic-controller-manager ros-noetic-ddynamic-reconfigure-python ros-noetic-pepper-meshes && \
+    git clone https://github.com/cssr4africa/gazebo_model_velocity_plugin && \    
     cd $HOME/workspace/pepper_sim_ws && catkin_make -DSIMULATOR=ON
     ```
 
