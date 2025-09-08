@@ -1,5 +1,5 @@
 <div align="center">
-<h1> Software Installation Script </h1>
+<h1> Software Installation Scripts </h1>
 </div>
 
 <div align="center">
@@ -9,24 +9,23 @@
 The CSSR4Africa (Culturally sensitive social robots for Africa) project aims to equip social robots with culturally-sensitive behaviours to engage effectively with people in African contexts. By identifying verbal and non-verbal social and cultural norms prevalent in African countries, the project integrates these behavioural patterns into robots, ensuring interactions align with local expectations. Demonstrations include giving a tour of a university laboratory and assisting visitors with directions at a university reception, showcasing the robots' culturally-aware engagement.
 
 # Table of Contents
-- [Table of Contents](#table-of-contents)
+
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Setting up the Development Environment](#setting-up-the-development-environment)
-  - [`Using shell scripts`](#using-shell-scripts)
-  - [✅ INSTALLATION COMPLETE ✅](#-installation-complete-)
-  - [`Step-by-step Installation`](#step-by-step-installation)
+  - [Using shell scripts](#using-shell-scripts)
+  - [Step-by-step Installation](#step-by-step-installation)
     - [Installing Dependencies](#installing-dependencies)
     - [Installing ROS Noetic](#installing-ros-noetic)
     - [For the Physical Robot](#for-the-physical-robot)
     - [For the Gazebo Simulator](#for-the-gazebo-simulator)
-  - [Installing and Running the CSSR4Africa Software](#installing-and-running-the-cssr4africa-software)
-    - [Installation for the Physical Robot](#installation-for-the-physical-robot)
+- [Installing and Running the CSSR4Africa Software](#installing-and-running-the-cssr4africa-software)
+  - [Installation for the Physical Robot](#installation-for-the-physical-robot)
     - [Setting up the Face and Person Detection Environment](#setting-up-the-face-and-person-detection-environment)
     - [Setting up the Sound Detection Environment](#setting-up-the-sound-detection-environment)
-    - [Installation for the Simulator Robot](#installation-for-the-simulator-robot)
-  - [✅ INSTALLATION COMPLETE ✅](#-installation-complete--1)
-  - [References](#references)
+    - [Setting up the Speech Event Environment](#setting-up-the-speech-event-environment)
+  - [Installation for the Simulator Robot](#installation-for-the-simulator-robot)
+- [References](#references)
 
 # Introduction
 
@@ -40,55 +39,65 @@ Please make sure you have a system running Ubuntu 20.04.
 
 > ⚡ **Important**  
 > You can follow one of the two alternatives below to set up the development environment for the **CSSR4Africa** project:
-> - Follow the **step-by-step guide** to install ROS Noetic and the required dependencies manually.
-> - Or use the **provided shell scripts** to install all required software automatically.
+>
+> - Follow the **[step-by-step guide](#step-by-step-installation)** to install ROS Noetic and the required dependencies manually.
+> - Or use the provided **[shell scripts](#using-shell-scripts)** to install all required software automatically.
 
+## Using shell scripts
 
-## `Using shell scripts`
 Use the following shell script to install ROS Noetic.
+
 1. **Update and upgrade the system.**
-```bash
-sudo apt update && sudo apt upgrade -y
-```
+
+    ```bash
+    sudo apt update && sudo apt upgrade -y
+    ```
 
 2. **Install Git.**
-```bash
-sudo apt install git
-```
+
+    ```bash
+    sudo apt install git
+    ```
+
 3. **Create the directory for installing the Software Installation Scripts**
-```bash
-mkdir -p "$HOME/workspace" && cd "$HOME/workspace"
-```
+
+    ```bash
+    mkdir -p "$HOME/workspace" && cd "$HOME/workspace"
+    ```
 
 4. **Clone the GitHub repository Software Installation Scripts**
-```bash
-git clone https://github.com/cssr4africa/software-Installation-scripts.git
-```
+
+    ```bash
+    git clone https://github.com/cssr4africa/software-Installation-scripts.git
+    ```
 
 5. **Make the all the shell files in the Software Installation Scripts executable**
-```bash
-chmod +x $HOME/workspace/software-Installation-scripts/*.sh
-```
+
+    ```bash
+    chmod +x $HOME/workspace/software-Installation-scripts/*.sh
+    ```
 
 6. **Navigate to the software-Installation-scripts directory and run the install_ros_noetic.sh script**
-```bash
-./install_ros_noetic.sh
-```
 
-`Use the following shell script to setup the workspace for both the physical and simulator enviornment. Inorder to make the simulator as the default workspace, you need to source the simulator workspace.`
+    ```bash
+    ./install_ros_noetic.sh
+    ```
 
 7. **Navigate to the software-Installation-scripts directory and run the install_pepper_ws.sh script**
 
-```bash
-./install_pepper_ws.sh
-```
+    Use the following shell script to setup the workspace for both the physical and simulator enviornment. Inorder to make the simulator as the default workspace, you need to source the simulator workspace.
 
-`The following shell script installs the cssr4africa package, all model files and data files, and Python environment packages needed to run the ROS nodes.`
+    ```bash
+    ./install_pepper_ws.sh
+    ```
 
 8. **Within the software-Installation-scripts and run the the install_cssr4africa_package.sh**
-```bash
-./install_cssr4africa_pacakge.sh
-```
+
+    The following shell script installs the cssr4africa package, all model files and data files, and Python environment packages needed to run the ROS nodes.
+
+    ```bash
+    ./install_cssr4africa_pacakge.sh
+    ```
 
 <div align="center">
 
@@ -96,15 +105,14 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
 
 </div>
 
-## `Step-by-step Installation`
+## Step-by-step Installation
+
 ### Installing Dependencies
-1.  **Install Curl, Git, and Python3-pip**
+
+1. **Install Curl, Git, and Python3-pip**
 
     ```bash
-    sudo apt update && sudo apt upgrade -y
-    ```
-
-    ```bash
+    sudo apt update && sudo apt upgrade -y && \
     sudo apt install -y curl git python3-pip net-tools git-lfs
     ```
 
@@ -152,7 +160,7 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
     sudo rosdep init
     rosdep update
     ```
-   
+
 ### For the Physical Robot
 
 1. **Install the NAOqi Driver and ROS Packages**
@@ -167,7 +175,6 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
 
     ```bash
     mkdir -p $HOME/workspace/pepper_rob_ws/src && cd $HOME/workspace/pepper_rob_ws/src
-
     ```
 
 3. **Clone the Required Repositories**
@@ -187,27 +194,30 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
     ```bash
     chmod +x $HOME/workspace/pepper_rob_ws/src/naoqi_driver/scripts/*
     ```
+
 5. **Build and install the BehaviorTree.CPP library**
+
    ```bash
     cd $HOME/workspace/pepper_rob_ws/src/BehaviorTree.CPP
     cmake -DCMAKE_CXX_STANDARD=17 .
     make
     sudo make install
    ```
-1. **Build the Workspace**
+
+6. **Build the Workspace**
 
     ```bash
     cd $HOME/workspace/pepper_rob_ws && catkin_make
 
     ```
 
-2. **Update the ROS Environment**
+7. **Update the ROS Environment**
 
     ```bash
     echo "source $HOME/workspace/pepper_rob_ws/devel/setup.bash" >> $HOME/.bashrc && source devel/setup.bash 
     ```
 
-3. **Install and Configure the Python NAOqi SDK**
+8. **Install and Configure the Python NAOqi SDK**
 
     ```bash
     cd $HOME && \
@@ -221,7 +231,7 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
     source $HOME/.bashrc
     ```
 
-4.  **Bring Up Pepper**
+9. **Bring Up Pepper**
 
     For bringing up the robot, you need to know the robot IP, the roscore IP, and the network interface name. The robot IP is the IP address of the robot, the roscore IP is the IP address of the computer running the roscore, and the network interface name is the name of the network interface. The network interface name can be found by running the `ifconfig` command below.
 
@@ -255,27 +265,29 @@ chmod +x $HOME/workspace/software-Installation-scripts/*.sh
     ```
 
     To automatically source the simulator workspace, add the following lines to your .bashrc file. Note that this will set the simulator workspace as the default ROS environment, which will override the physical robot workspace:
-    
+
     ```bash
     echo "source $HOME/workspace/pepper_sim_ws/devel/setup.bash" >> $HOME/.bashrc && \
     source $HOME/.bashrc
-    ```    
+    ```
+
 2. **Run the Gazebo Simulator**
 
     ```bash
     roslaunch pepper_gazebo_plugin pepper_gazebo_plugin_in_office_CPU.launch
     ```
-    
+
     To visualize the robot in RViz, run the following command in a new terminal:
 
     ```bash
     rosrun rviz rviz -d `rospack find pepper_gazebo_plugin`/config/pepper_sensors.rviz
     ```
 
-## Installing and Running the CSSR4Africa Software
+# Installing and Running the CSSR4Africa Software
+
 This guide provides step-by-step instructions for installing the CSSR4Africa software and models on your physical robot.
 
-### Installation for the Physical Robot
+## Installation for the Physical Robot
 
 Each step below contains commands that can be executed together by copying and pasting the entire code block into your terminal.
 
@@ -334,10 +346,35 @@ Each step below contains commands that can be executed together by copying and p
     mv ~/cssr4africa_unit_tests_data_files/person_detection_test/data/* \
     $HOME/workspace/pepper_rob_ws/src/cssr4africa/unit_tests/person_detection_test/data/
     ```
-8. **Deletion of the Temporary Folders**
+
+8. **Move speech event models to the correct directory**
+
+    ```bash
+    mkdir -p "$HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/speech_event/models" && \
+    mv ~/cssr4africa_models/speech_event/models/* \
+    "$HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/speech_event/models"
+    ```
+
+9. **Deletion of the Temporary Folders**
+
     ```bash
     rm -rf ~/cssr4africa_models && \
     rm -rf ~/cssr4africa_unit_tests_data_files
+    ```
+
+10. **Install additional linux packages for speech event**
+
+    ```bash
+    sudo apt-get update && \
+    sudo apt-get install cython3 ffmpeg gfortran libopenblas-dev libopenblas64-dev patchelf pkg-config portaudio19-dev python3-testresources python3-tk python3-typing-extensions sox
+    ```
+
+11. **Make speech event application files executable**
+
+    ```bash
+    chmod +x "$HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/speech_event/src/speech_event_application.py" && \
+    chmod +x "$HOME/workspace/pepper_rob_ws/src/cssr4africa/unit_tests/speech_event_test/src/speech_event_test_application.py" && \
+    chmod +x "$HOME/workspace/pepper_rob_ws/src/cssr4africa/unit_tests/speech_event_test/src/speech_event_driver.py"
     ```
 
 ### Setting up the Face and Person Detection Environment
@@ -381,53 +418,51 @@ Note: This environment is required for running face and person detection feature
 
 ```bash
 source $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs/cssr4africa_face_person_detection_env/bin/activate
-``` 
-
+```
 
 ### Setting up the Sound Detection Environment
 
 This section provides step-by-step instructions to create and configure a dedicated Python virtual environment for the sound detection component of the CSSR4Africa robotics system. You can copy and paste these commands directly into your terminal.
 
-1. Install Python 3.8 and Virtual Environment Tools
+1. **Install Python 3.8 and Virtual Environment Tools**
 
-```bash
-sudo apt install -y python3.8 python3.8-venv python3.8-distutils
-```
+    ```bash
+    sudo apt install -y python3.8 python3.8-venv python3.8-distutils
+    ```
 
-2. Create a Workspace Directory for Virtual Environments
+2. **Create a Workspace Directory for Virtual Environments**
 
-```bash
-mkdir -p $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs
-cd $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs
-```
+    ```bash
+    mkdir -p $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs
+    cd $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs
+    ```
 
-3. Create the Sound Detection Virtual Environment
+3. **Create the Sound Detection Virtual Environment**
 
-```bash
-python3.8 -m venv cssr4africa_sound_detection_env
-```
+    ```bash
+    python3.8 -m venv cssr4africa_sound_detection_env
+    ```
 
-4. Activate the Virtual Environment
+4. **Activate the Virtual Environment**
 
-```bash
-source cssr4africa_sound_detection_env/bin/activate
-```
+    ```bash
+    source cssr4africa_sound_detection_env/bin/activate
+    ```
 
-> **Note:** Your prompt should now start with `(cssr4africa_sound_detection_env)` indicating that the environment is active.
+    > **Note:** Your prompt should now start with `(cssr4africa_sound_detection_env)` indicating that the environment is active.
 
-5. Upgrade pip Inside the Virtual Environment
+5. **Upgrade pip Inside the Virtual Environment**
 
-```bash
-pip install --upgrade pip
-```
+    ```bash
+    pip install --upgrade pip
+    ```
 
-6. Install Project-Specific Dependencies
+6. **Install Project-Specific Dependencies**
 
-```bash
-pip install -r \
-  $HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/sound_detection/sound_detection_requirements.txt
-```
----
+    ```bash
+    pip install -r \
+    $HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/sound_detection/sound_detection_requirements.txt
+    ```
 
 Remember to **activate** the `cssr4africa_sound_detection_env` each time you start a new shell session before running any sound detection scripts:
 
@@ -435,7 +470,52 @@ Remember to **activate** the `cssr4africa_sound_detection_env` each time you sta
 source $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs/cssr4africa_sound_detection_env/bin/activate
 ```
 
-### Installation for the Simulator Robot
+### Setting up the Speech Event Environment
+
+This section provides step-by-step instructions to create and configure a dedicated Python virtual environment for the speech event component of the CSSR4Africa robotics system. You can copy and paste these commands directly into your terminal.
+
+1. **Declare Local Shell Variables to be Used Throught the Succeeding Steps**
+
+    ```bash
+    ALL_VENVS_DIR="$HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs"
+    SPEECH_EVENT_VENV_DIR="$HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs/cssr4africa_speech_event_env"
+    REQUIREMENTS_FILE="$HOME/workspace/pepper_rob_ws/src/cssr4africa/cssr_system/speech_event/speech_event_requirements.txt"
+    ```
+
+2. **Install Python 3.8 and Virtual Environment Tools**
+
+    ```bash
+    sudo apt install -y python3.8 python3.8-venv python3.8-distutils
+    ```
+
+3. **Create Python Virtual Environment**
+
+    ```bash
+    mkdir -p "$ALL_VENVS_DIR"
+    python3.8 -m "$SPEECH_EVENT_VENV_DIR"
+    ```
+
+4. **Install python requirements**
+
+    ```bash
+    source "$SPEECH_EVENT_VENV_DIR/bin/activate"
+    python -m pip install --upgrade pip
+    pip install -r "$REQUIREMENTS_FILE"
+    ```
+
+5. **Deactivate the Python Virtual Environment**
+
+    ```bash
+    deactivate
+    ```
+
+Remember to **activate** the `cssr4africa_speech_event_env` python virtual environment each time you start a new shell session before running any speech event scripts:
+
+```bash
+source $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs/cssr4africa_speech_event_env/bin/activate
+```
+
+## Installation for the Simulator Robot
 
 1. **Clone and Build the Software**
 
@@ -451,7 +531,7 @@ source $HOME/workspace/pepper_rob_ws/src/cssr4africa_virtual_envs/cssr4africa_so
 
 </div>
 
-## References
+# References
 
 - [ROS Noetic Installation](http://wiki.ros.org/noetic/Installation/Ubuntu)
 - [Pepper Technical Specifications](http://doc.aldebaran.com/2-5/family/pepper_technical/index_pep.html)
