@@ -73,6 +73,10 @@ install_physical_robot() {
     chmod +x "$HOME/workspace/pepper_rob_ws/src/cssr4africa/unit_tests/speech_event_test/src/speech_event_test_application.py"
     chmod +x "$HOME/workspace/pepper_rob_ws/src/cssr4africa/unit_tests/speech_event_test/src/speech_event_driver.py"
 
+    # 12. Install additional ros packages for robot localization
+    echo "11. Installing additional ROS packages for robot localization..."
+    sudo apt install ros-noetic-aruco ros-noetic-aruco-msgs ros-noetic-aruco-ros
+
     echo "Physical robot installation completed!"
 }
 
